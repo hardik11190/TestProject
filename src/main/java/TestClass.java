@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TestClass {
-
+    static WebDriver driver;
     static String url = "https://in.bookmyshow.com/buytickets/the-marksman-pune/movie-pune-ET00307138-MT/20210226";
     static String XPATH_TIME_BUTTONS = "//div[@class='showtime-pill-container']/a";
     static String XPATH_THEATRE = "//div[@class='showtime-pill-container']/a[1]//parent::div//parent::div//parent::div//parent::li";
@@ -26,7 +26,7 @@ public class TestClass {
 
         System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
 
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         Actions actions = new Actions(driver);
         Wait<WebDriver> wait = new WebDriverWait(driver, 10);
 
@@ -74,8 +74,18 @@ public class TestClass {
 
         }
 
-
         System.out.println("Cheapese earliest show is at: " + Arrays.asList(hashMap));
         driver.close();
+    }
+
+    public boolean isClickable(WebElement element) {
+
+        try {
+            Wait<WebDriver> wait = new WebDriverWait(driver, 5);
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
